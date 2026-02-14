@@ -37,7 +37,46 @@ h1{ font-size:2rem }
 
 /* layout header */
 .page-header{ display:flex; gap:20px; align-items:center; padding:12px 20px }
-.profile .image{ width:150px; height:150px; border-radius:50%; object-fit:cover; display:block }
+.profile {
+    position: relative;
+    display: inline-block;
+}
+.profile::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        var(--accent),
+        rgba(168, 162, 255, 0.9),
+        var(--accent),
+        rgba(108, 99, 255, 0.5),
+        var(--accent)
+    );
+    animation: profile-shine 4s linear infinite;
+    z-index: 0;
+}
+.profile::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--bg);
+    z-index: 0;
+}
+.profile .image {
+    position: relative;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+@keyframes profile-shine {
+    to { transform: rotate(360deg); }
+}
 .intro{ text-align:left }
 .contact a{ color:var(--accent); text-decoration:none }
 .contact a:hover, .contact a:focus{ text-decoration:underline }
@@ -80,9 +119,8 @@ hr{ border:0; height:1px; background: rgba(255,255,255,0.06); margin:18px 0 }
     height: 88px;
     border-radius: 12px;
     display: block;
-    transition: transform 340ms cubic-bezier(.2,.8,.2,1), filter 240ms ease;
-    transform: translateZ(0);
-    object-fit:cover;
+    transition: filter 240ms ease;
+    object-fit: cover;
 }
 
 .social-card span {
@@ -102,7 +140,6 @@ hr{ border:0; height:1px; background: rgba(255,255,255,0.06); margin:18px 0 }
 .social-card:hover img,
 .social-card:focus img,
 .social-card:focus-visible img {
-    transform: translateZ(44px) scale(1.04);
     filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
 }
 
@@ -124,4 +161,5 @@ hr{ border:0; height:1px; background: rgba(255,255,255,0.06); margin:18px 0 }
 
 @media (prefers-reduced-motion: reduce) {
     .social-card, .social-card img { transition: none !important }
+    .profile::before { animation: none; }
 }
